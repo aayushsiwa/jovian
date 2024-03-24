@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="./static/style.css" rel="stylesheet" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            crossorigin="anonymous"
+        />
+        <title>Home</title>
+    </head>
+    <body>
+        {% include 'navbar.html' %}
+        <img
+            id="banner"
+            class="img-fluid"
+            src="../static/banner.jpg"
+            alt=""
+            width="320"
+        />
+        <div class="container">
+            <h1 class="text-center mt-2 mb-4">Jovian Careers</h1>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <p class="lead">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Expedita labore a architecto asperiores eius velit
+                        sit aliquid odit veniam dolore fugit culpa officiis
+                        obcaecati, doloremque et omnis eum hic doloribus.
+                    </p>
+                </div>
+                <div class="d-none d-md-block col-6">
+                    <img src="/static/people_at_work.jpg" id="people" />
+                </div>
+            </div>
+            <h2 class="text-center mt-2 mb-4">Jobs</h2>
+            <div>
+                {% for job in jobs %} {%include('./jobItem.html')%} {%endfor%}
+            </div>
+            <div style="text-align: center">
+                <a class="btn btn-primary btn-lg" href='mailto:hello@jovian.com?Subject=Question about Job Openings'>Contact Us</a>
+            </div>
+        </div>
+        {%include 'footer.html'%}
+    </body>
+</html>
