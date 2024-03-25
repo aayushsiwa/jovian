@@ -4,6 +4,7 @@
 <head>
     {%include('./bootstrap.html')%}
     <title>{{job.title}} - Jovian Careers</title>
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 </head>
 
 <body>
@@ -29,6 +30,7 @@
         <!-- <p>{{job.requirements}}</p> -->
         <h4>Salary</h4>
         <p>{{job.currency}} {{job.salary}}</p>
+        {% include 'applicationForm.html' %}
     </div>
     {% include 'footer.html' %}
 </body>
