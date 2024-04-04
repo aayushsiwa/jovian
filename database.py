@@ -1,3 +1,4 @@
+from mail import send_email
 from sqlalchemy import create_engine, text
 import os
 
@@ -28,12 +29,28 @@ def load_job(id):
             return job
 
 
-def application(job_id, data):
+def application_confirmation(jobId, data):
+    # print(jobId)
+    name = data["fullName"].capitalize()
+    # print("load not working")
+    job = load_job(jobId)
+    subject = f"Recieved application for the of {job['title']} at Jovian"
+    with open("./templates/mail.html", "r") as f:
+        message = f.read()
+        f.close()
+    message = message.replace("CName", name)
+    message = message.replace("JobT", job["title"])
+    # print(subject, message)
+    result = send_email(data["email"], subject, message)
+
+
+def application(jobId, data):
     with engine.connect() as conn:
         query = text(
             "INSERT INTO applications (jobId, fullName, email, linkedIn, education, workExp, resume) VALUES (:jobId, :fullName, :email, :linkedIn, :education, :workExp, :resume)"
         )
-        print(query)
+        # print(query)
+        # print("query sent")
         try:
             conn.execute(
                 query,
@@ -48,10 +65,16 @@ def application(job_id, data):
                 },
             )
             conn.commit()
+            # print("commit")
+            jobT = load_job(jobId)
+            # print(jobT['title'])
+            print(application_confirmation(jobId, data))
+            # print("app")
             return True  # Return True if insertion is successful
         except Exception as e:
             print(f"An error occurred: {e}")
             return False  # Return False if insertion fails
+
 
 def load_applications():
     with engine.connect() as conn:
@@ -64,6 +87,7 @@ def load_applications():
     # print(jobs[0]["id"])
     return applications
 
+
 def load_application(jobId):
     with engine.connect() as conn:
         result = conn.execute(text(f"SELECT * FROM applications where jobId={jobId};"))
@@ -74,3 +98,17 @@ def load_application(jobId):
         else:
             application = {column: value for column, value in zip(column_names, row[0])}
             return application
+
+
+def mail_application(jobId, email):
+    with engine.connect() as conn:
+        result = conn.execute(
+            text(f"SELECT * FROM applications WHERE email='{email}' and jobId={jobId};")
+        )
+        column_names = result.keys()
+        row = result.fetchall()
+        if len(row) == 0:
+            return None
+        else:
+            application = {column: value for column, value in zip(column_names, row[0])}
+            application_confirmation(application)
