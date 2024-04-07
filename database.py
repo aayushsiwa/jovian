@@ -1,6 +1,10 @@
 from mail import send_email
 from sqlalchemy import create_engine, text
 import os
+from dotenv import load_dotenv
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 engine = create_engine(os.environ["DB_SECRET"])
 
@@ -68,7 +72,7 @@ def application(jobId, data):
             # print("commit")
             jobT = load_job(jobId)
             # print(jobT['title'])
-            print(application_confirmation(jobId, data))
+            # print(application_confirmation(jobId, data))
             # print("app")
             return True  # Return True if insertion is successful
         except Exception as e:
@@ -98,17 +102,3 @@ def load_application(jobId):
         else:
             application = {column: value for column, value in zip(column_names, row[0])}
             return application
-
-
-def mail_application(jobId, email):
-    with engine.connect() as conn:
-        result = conn.execute(
-            text(f"SELECT * FROM applications WHERE email='{email}' and jobId={jobId};")
-        )
-        column_names = result.keys()
-        row = result.fetchall()
-        if len(row) == 0:
-            return None
-        else:
-            application = {column: value for column, value in zip(column_names, row[0])}
-            application_confirmation(application)
