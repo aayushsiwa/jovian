@@ -10,7 +10,7 @@ from database import (
 import os
 from dotenv import load_dotenv
 
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
 load_dotenv(dotenv_path)
 
 
@@ -21,6 +21,29 @@ app.config["HCAPTCHA_SECRET_KEY"] = os.environ["CAPTCHA_SECRET"]
 hcaptcha = hCaptcha(app)
 
 jobs = load_jobs()
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    code = str(error).split(" ")[0]
+    return render_template("error.html", error=error, code=code)
+
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    code = str(error).split(" ")[0]
+    return render_template("error.html", error=error, code=code)
+
+
+@app.errorhandler(400)
+def bad_request_error(error):
+    code = str(error).split(" ")[0]
+    return render_template("error.html", error=error, code=code)
+
+@app.errorhandler(405)
+def method_not_allowed(error):
+    code = str(error).split(" ")[0]
+    return render_template("error.html",error=error,code=code)
 
 
 @app.route("/")
@@ -59,7 +82,7 @@ def list_application(jobId):
 def show_job(id):
     job = load_job(id)
     if not job:
-        return "Not Found", 404
+        return not_found_error("404 : Job Not Found")
     return render_template(
         "jobPage.html", job=job, captcha_sitekey=os.environ["CAPTCHA_SITEKEY"]
     )
@@ -69,10 +92,10 @@ def show_job(id):
 def apply_to(id):
     job = load_job(id)
     data = request.form
-
+    if request.method != "POST":
+        return "This route only allows GET requests"
     if not hcaptcha.verify():
-        return "hCaptcha verification failed", 400
-
+        return bad_request_error("400 hCaptcha verification failed")
     application(id, data)
     return render_template("applicationSub.html", job=job, application=data)
 

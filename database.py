@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, text
 import os
 from dotenv import load_dotenv
 
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
 load_dotenv(dotenv_path)
 
 engine = create_engine(os.environ["DB_SECRET"])
@@ -22,15 +22,19 @@ def load_jobs():
 
 
 def load_job(id):
-    with engine.connect() as conn:
-        result = conn.execute(text(f"SELECT * FROM jobs where id={id};"))
-        column_names = result.keys()
-        row = result.fetchall()
-        if len(row) == 0:
-            return None
-        else:
-            job = {column: value for column, value in zip(column_names, row[0])}
-            return job
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(text(f"SELECT * FROM jobs WHERE id={id};"))
+            column_names = result.keys()
+            row = result.fetchone()
+            if row is None:
+                return None
+            else:
+                job = {column: value for column, value in zip(column_names, row)}
+                return job
+    except Exception as e:
+        print(f"An error occurred while loading job: {e}")
+        return None
 
 
 def application_confirmation(jobId, data):
@@ -49,13 +53,11 @@ def application_confirmation(jobId, data):
 
 
 def application(jobId, data):
-    with engine.connect() as conn:
-        query = text(
-            "INSERT INTO applications (jobId, fullName, email, linkedIn, education, workExp, resume) VALUES (:jobId, :fullName, :email, :linkedIn, :education, :workExp, :resume)"
-        )
-        # print(query)
-        # print("query sent")
-        try:
+    try:
+        with engine.connect() as conn:
+            query = text(
+                "INSERT INTO applications (jobId, fullName, email, linkedIn, education, workExp, resume) VALUES (:jobId, :fullName, :email, :linkedIn, :education, :workExp, :resume)"
+            )
             conn.execute(
                 query,
                 {
@@ -69,15 +71,11 @@ def application(jobId, data):
                 },
             )
             conn.commit()
-            # print("commit")
-            jobT = load_job(jobId)
-            # print(jobT['title'])
-            # print(application_confirmation(jobId, data))
-            # print("app")
-            return True  # Return True if insertion is successful
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            return False  # Return False if insertion fails
+            application_confirmation(jobId, data)
+            return True
+    except Exception as e:
+        print(f"An error occurred while processing application: {e}")
+        return False
 
 
 def load_applications():
@@ -93,12 +91,20 @@ def load_applications():
 
 
 def load_application(jobId):
-    with engine.connect() as conn:
-        result = conn.execute(text(f"SELECT * FROM applications where jobId={jobId};"))
-        column_names = result.keys()
-        row = result.fetchall()
-        if len(row) == 0:
-            return None
-        else:
-            application = {column: value for column, value in zip(column_names, row[0])}
-            return application
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(
+                text(f"SELECT * FROM applications where jobId={jobId};")
+            )
+            column_names = result.keys()
+            row = result.fetchall()
+            if len(row) == 0:
+                return None
+            else:
+                application = {
+                    column: value for column, value in zip(column_names, row[0])
+                }
+                return application
+    except Exception as e:
+        print(f"An error occurred while loading application: {e}")
+        return None
