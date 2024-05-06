@@ -4,3 +4,4 @@ pymysql
 SQLAlchemy
 Flask-hCaptcha
 python-dotenv
+cryptography
