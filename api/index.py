@@ -2,7 +2,6 @@ from flask import Flask, render_template, jsonify, request, send_from_directory
 from flask_hcaptcha import hCaptcha
 import os
 from dotenv import load_dotenv
-from mail import send_email
 from sqlalchemy import create_engine, text
 import smtplib
 from email.mime.text import MIMEText
