@@ -37,12 +37,6 @@ def send_email(receiver_email, subject, message):
         server.quit()  # Ensure to close the SMTP connection
 
 
-# send_email("aditya.sen1hl@gmail.com","123","hi")
-
-
-dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
-load_dotenv(dotenv_path)
-
 engine = create_engine(os.environ["DB_SECRET"])
 
 
@@ -235,4 +229,4 @@ def apply_to(id):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", debug=False)
