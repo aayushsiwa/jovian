@@ -1,0 +1,7 @@
+Flask
+Gunicorn
+pymysql
+SQLAlchemy
+Flask-hCaptcha
+python-dotenv
+cryptography

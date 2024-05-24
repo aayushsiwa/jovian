@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home</title>
+    {% include 'bootstrap.html' %}
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    {% include 'banner.html' %}
+    <div class="container">
+        <p class="text-center heading">Jovian Careers</p>
+        <div class="row mb-4">
+            <div class="col-md-6 text-center">
+                <p class="lead">
+                    Jovian is a leading online learning platform for aspiring and experienced data scientists.
+                <p class="lead">We empower individuals to transform their careers through our:</p>
+                <ul>
+                    <li>Engaging courses developed by industry experts
+                    <li>Interactive project-based learning to build your portfolio
+                    <li>Thriving community for collaboration and support
+                </ul>
+                <p class="lead">Join our team and be part of the future of data science education!</p>
+                </p>
+            </div>
+            <div class="d-none d-md-block col-6">
+                <img src="{{ url_for('static', filename='people_at_work.jpg') }}" id="people" />
+            </div>
+        </div>
+        <h2 class="text-center mt-2 mb-4">Jobs</h2>
+        <div>
+            {% for job in jobs %} {%include('./jobItem.html')%} {%endfor%}
+        </div>
+        <div class="text-center">
+            <a class="btn btn-primary btn-lg" href='mailto:hello@jovian.com?Subject=Question about Job Openings'>Contact
+                Us</a>
+        </div>
+    </div>
+    {%include 'footer.html'%}
+</body>
+
+</html>

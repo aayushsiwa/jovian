@@ -1,0 +1,54 @@
+* {
+    font-family: Roboto;
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: bold;
+    color: darkolivegreen;
+    text-align: center;
+}
+
+nav span {
+    margin-left: -20px;
+    font-family: 'Courier Prime', Courier, monospace;
+    font-weight: 600;
+    font-style: italic;
+}
+
+#hero {
+    width: 100vw;
+    height: 50vh;
+    margin-bottom: 1.5vh;
+}
+
+.heading {
+    font-size: 2rem;
+    /* color: darkolivegreen; */
+    color: #08F;
+    text-align: center;
+    font-weight: 600;
+}
+
+.bodytext {
+    color: black;
+    text-align: center;
+}
+
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+#people {
+    height: 320px;
+    border-radius: 4px;
+}
+
+ul {
+    text-align: left;
+}
+
+.jobTitle {
+    color: grey;
+}

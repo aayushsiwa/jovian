@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'bootstrap.html' %}
+    <title>{{job.title}} - Application</title>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    {% include 'banner.html' %}
+    <div class="container">
+        <h1 class="text-center mt-2 mb-4">Jovian Careers</h1>
+        <p class="lead">Application for role of <b>{{job.title}}</b> has been submitted</p>
+        <b>Full Name</b>
+        <div class="mb-2">{{application['fullName']}}</div>
+        <b>Email</b>
+        <div class="mb-2">{{application['email']}}</div>
+        <b>LinkedIn</b>
+        <div class="mb-2">{{application['linkedIn']}}</div>
+        <b>Education</b>
+        <div class="mb-2">{{application['education']}}</div>
+        <b>Work Experience</b>
+        <div class="mb-2">{{application['workExp']}}</div>
+        <b>Resume</b>
+        <div class="mb-2">{{application['resume']}}</div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+
+</html>

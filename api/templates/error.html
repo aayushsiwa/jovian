@@ -1,0 +1,8 @@
+{% include 'bootstrap.html' %}
+<div class="container">
+    <h1>Error {{ code }}</h1>
+    <h3>{{ error }}</h3>
+    <div class="container d-flex justify-content-center">
+        <img src="https://http.dog/{{ code }}.jpg" alt="" class="rounded border border-4 border-danger p-1 error w-50 mt-4">
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="container-fluid text-center mt-5">
+    <h4 class="mb-3">Application Form</h4>
+    <form action="/job/{{job['id']}}/apply" method="post">
+        <div class="form-floating mb-2">
+            <input type="text" class="form-control" name="fullName" placeholder="John Doe" required>
+            <label for="fullName">Full Name</label>
+        </div>
+        <div class="form-floating mb-2 has-validation">
+            <input type="email" class="form-control" name="email" placeholder="johndoe@example.com" required>
+            <label for="floatingPassword">Email Address</label>
+        </div>
+        <div class="mb-3">
+            <div class="input-group">
+                <span class="input-group-text">https://linkedin.com/in/</span>
+                <input type="text" class="form-control" aria-describedby="basic-addon3 basic-addon4" name="linkedIn">
+            </div>
+        </div>
+        <div class="form-floating mb-2">
+            <textarea class="form-control" name="education" style="height: 75px"></textarea>
+            <label for="education">Education</label>
+        </div>
+        <div class="form-floating mb-2">
+            <textarea class="form-control" name="workExp" style="height: 75px"></textarea>
+            <label for="workExp">Work Experience</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="url" class="form-control" name="resume" placeholder="">
+            <label for="resume">Resume</label>
+        </div>
+        <div class="h-captcha" data-sitekey={{captcha_sitekey}} data-theme="dark"></div>
+        <input type="submit" value="Submit" class="btn btn-primary btn-lg">
+    </form>
+
+</div>
