@@ -21,8 +21,8 @@ This is a Flask-based CRUD (Create, Read, Update, Delete) application for managi
 
 1. **Clone the repository**
     ```sh
-    git clone -b master https://github.com/senaditya/jovian-v2
-    cd jovian-v2
+    git clone -b master https://github.com/aayushsiwa/jovian
+    cd jovian
     ```
 
 2. **Create a virtual environment and activate it**
