@@ -13,7 +13,7 @@ load_dotenv(dotenv_path)
 
 def send_email(receiver_email, subject, message):
     try:
-        smtp_server = "smtp.mailersend.net"
+        smtp_server = "smtp-mail.outlook.com"
         smtp_port = 587
         smtp_username = os.environ["SMTP_USER"]
         smtp_password = os.environ["SMTP_PASS"]
