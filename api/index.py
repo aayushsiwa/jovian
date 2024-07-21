@@ -74,9 +74,9 @@ def application_confirmation(jobId, data):
     # print("load not working")
     job = load_job(jobId)
     subject = f"Recieved application for the of {job['title']} at Jovian"
-    with open("./templates/mail.html", "r") as f:
+    template_path = os.path.join(os.path.dirname(__file__), "templates", "mail.html")
+    with open(template_path, "r") as f:
         message = f.read()
-        f.close()
     message = message.replace("CName", name)
     message = message.replace("JobT", job["title"])
     # print(subject, message)
